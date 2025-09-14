@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>สั่งซื้อสินค้า - ร้านรองเท้ามือสอง</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header><h1>สั่งซื้อสินค้า</h1></header>
+  <nav>
+    <a href="index.html">หน้าแรก</a>
+    <a href="products.html">สินค้า</a>
+    <a href="about.html">เกี่ยวกับเรา</a>
+    <a href="contact.html">สั่งซื้อรองเท้า</a>
+  </nav>
+  <!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>สั่งซื้อรองเท้า</title>
+</head>
+<body>
+  <h2>ฟอร์มสั่งซื้อรองเท้า</h2>
+  <form method="POST" action="send_order.php">
+    <label>ชื่อ-นามสกุล:</label><br>
+    <input type="text" name="name" required><br><br>
+
+    <label>เบอร์โทร / ช่องทางติดต่อ:</label><br>
+    <input type="text" name="phone" required><br><br>
+
+    <label>ที่อยู่จัดส่ง:</label><br>
+    <textarea name="address" required></textarea><br><br>
+
+    <label>เลือกรองเท้า:</label><br>
+    <select name="product" required>
+      <option value="Nike หมด">Nike หมด</option>
+      <option value="Adidas หมด">Adidas หมด</option>
+    </select><br><br>
+
+    <label>จำนวน:</label><br>
+    <input type="number" name="quantity" value="1" min="1" required><br><br>
+
+    <button type="submit">สั่งซื้อตอนนี้</button>
+  </form>
+<script>
+  // ฟังก์ชันอ่านค่า URL parameter
+  function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+  }
+
+  // ตรวจสอบสถานะจาก URL
+  window.onload = function() {
+    const status = getQueryParam('status');
+    if (status === 'success') {
+      alert("✅ ส่งคำสั่งซื้อสำเร็จแล้ว ขอบคุณที่สั่งซื้อครับ!");
+    } else if (status === 'error') {
+      alert("❌ เกิดข้อผิดพลาดในการส่งคำสั่งซื้อ กรุณาลองใหม่อีกครั้ง");
+    }
+  };
+</script>
+</body>
+</html>
+
