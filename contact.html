@@ -18,38 +18,83 @@
 <head>
   <meta charset="UTF-8">
   <title>สั่งซื้อสินค้า</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8f9fa;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      display: flex;
+      justify-content: center;   /* จัดแนวนอนตรงกลาง */
+      align-items: center;       /* จัดแนวตั้งตรงกลาง */
+      min-height: 100vh;         /* เต็มหน้าจอ */
+    }
+    form {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 350px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    label {
+      font-weight: bold;
+    }
+    input, textarea, select, button {
+      width: 100%;
+      padding: 8px;
+      margin: 5px 0 15px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+  </style>
 </head>
 <body>
-  <h2>ฟอร์มสั่งซื้อสินค้า</h2>
+  <div class="container">
+    <form id="orderForm" onsubmit="sendEmail(event)">
+      <h2>ฟอร์มสั่งซื้อสินค้า</h2>
 
-  <!-- ฟอร์มสั่งซื้อ -->
-  <form id="orderForm" onsubmit="sendEmail(event)">
-    <label>ชื่อ:</label><br>
-    <input type="text" name="name" required><br><br>
+      <label>ชื่อ:</label>
+      <input type="text" name="name" required>
 
-    <label>เบอร์โทร:</label><br>
-    <input type="text" name="phone" required><br><br>
+      <label>เบอร์โทร:</label>
+      <input type="text" name="phone" required>
 
-    <label>ที่อยู่:</label><br>
-    <textarea name="address" required></textarea><br><br>
+      <label>ที่อยู่:</label>
+      <textarea name="address" required></textarea>
 
-    <label>สินค้า:</label><br>
-    <select name="product">
-      <option value="Nike">Nike มือสอง</option>
-      <option value="Adidas">Adidas มือสอง</option>
-    </select><br><br>
+      <label>สินค้า:</label>
+      <select name="product">
+        <option value="Nike">Nike มือสอง</option>
+        <option value="Adidas">Adidas มือสอง</option>
+      </select>
 
-    <label>จำนวน:</label><br>
-    <input type="number" name="quantity" value="1" required><br><br>
+      <label>จำนวน:</label>
+      <input type="number" name="quantity" value="1" required>
 
-    <button type="submit">สั่งซื้อ</button>
-  </form>
+      <button type="submit">สั่งซื้อ</button>
+    </form>
+  </div>
 
-  <!-- เรียกใช้ EmailJS -->
+  <!-- EmailJS -->
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <script>
     (function() {
-      emailjs.init("3WFPLVCZP_87CtJsE"); // ✅ Public Key
+      emailjs.init("3WFPLVCZP_87CtJsE"); // Public Key
     })();
 
     function sendEmail(event) {
@@ -57,7 +102,7 @@
       emailjs.sendForm("service_1bbgx1s", "template_3eflsqc", event.target)
         .then(function() {
           alert("ส่งคำสั่งซื้อเรียบร้อยแล้ว ✅");
-          document.getElementById("orderForm").reset(); // ล้างฟอร์ม
+          document.getElementById("orderForm").reset();
         }, function(error) {
           alert("❌ เกิดข้อผิดพลาด: " + JSON.stringify(error));
         });
@@ -65,5 +110,6 @@
   </script>
 </body>
 </html>
+
 
 
