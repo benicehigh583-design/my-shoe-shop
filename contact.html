@@ -17,48 +17,53 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8">
-  <title>สั่งซื้อรองเท้า</title>
+  <title>สั่งซื้อสินค้า</title>
 </head>
 <body>
-  <h2>ฟอร์มสั่งซื้อรองเท้า</h2>
-  <form method="POST" action="send_order.php">
-    <label>ชื่อ-นามสกุล:</label><br>
+  <h2>ฟอร์มสั่งซื้อสินค้า</h2>
+
+  <!-- ฟอร์มสั่งซื้อ -->
+  <form id="orderForm" onsubmit="sendEmail(event)">
+    <label>ชื่อ:</label><br>
     <input type="text" name="name" required><br><br>
 
-    <label>เบอร์โทร / ช่องทางติดต่อ:</label><br>
+    <label>เบอร์โทร:</label><br>
     <input type="text" name="phone" required><br><br>
 
-    <label>ที่อยู่จัดส่ง:</label><br>
+    <label>ที่อยู่:</label><br>
     <textarea name="address" required></textarea><br><br>
 
-    <label>เลือกรองเท้า:</label><br>
-    <select name="product" required>
-      <option value="Nike หมด">Nike หมด</option>
-      <option value="Adidas หมด">Adidas หมด</option>
+    <label>สินค้า:</label><br>
+    <select name="product">
+      <option value="Nike">Nike มือสอง</option>
+      <option value="Adidas">Adidas มือสอง</option>
     </select><br><br>
 
     <label>จำนวน:</label><br>
-    <input type="number" name="quantity" value="1" min="1" required><br><br>
+    <input type="number" name="quantity" value="1" required><br><br>
 
-    <button type="submit">สั่งซื้อตอนนี้</button>
+    <button type="submit">สั่งซื้อ</button>
   </form>
-<script>
-  // ฟังก์ชันอ่านค่า URL parameter
-  function getQueryParam(param) {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get(param);
-  }
 
-  // ตรวจสอบสถานะจาก URL
-  window.onload = function() {
-    const status = getQueryParam('status');
-    if (status === 'success') {
-      alert("✅ ส่งคำสั่งซื้อสำเร็จแล้ว ขอบคุณที่สั่งซื้อครับ!");
-    } else if (status === 'error') {
-      alert("❌ เกิดข้อผิดพลาดในการส่งคำสั่งซื้อ กรุณาลองใหม่อีกครั้ง");
+  <!-- เรียกใช้ EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script>
+    (function() {
+      emailjs.init("3WFPLVCZP_87CtJsE"); // ✅ Public Key
+    })();
+
+    function sendEmail(event) {
+      event.preventDefault();
+      emailjs.sendForm("service_1bbgx1s", "template_3eflsqc", event.target)
+        .then(function() {
+          alert("ส่งคำสั่งซื้อเรียบร้อยแล้ว ✅");
+          document.getElementById("orderForm").reset(); // ล้างฟอร์ม
+        }, function(error) {
+          alert("❌ เกิดข้อผิดพลาด: " + JSON.stringify(error));
+        });
     }
-  };
-</script>
+  </script>
 </body>
 </html>
+
 
