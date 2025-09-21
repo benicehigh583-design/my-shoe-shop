@@ -1,115 +1,120 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>สั่งซื้อสินค้า - ร้านรองเท้ามือสอง</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <header><h1>สั่งซื้อสินค้า</h1></header>
-  <nav>
-    <a href="index.html">หน้าแรก</a>
-    <a href="products.html">สินค้า</a>
-    <a href="about.html">เกี่ยวกับเรา</a>
-    <a href="contact.html">สั่งซื้อรองเท้า</a>
-  </nav>
-  <!DOCTYPE html>
 <html lang="th">
 <head>
   <meta charset="UTF-8">
-  <title>สั่งซื้อสินค้า</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>สั่งซื้อสินค้า | T‑Shop</title>
+  <link rel="stylesheet" href="style.css">
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f8f9fa;
-      margin: 0;
-      padding: 0;
-    }
-    .container {
-      display: flex;
-      justify-content: center;   /* จัดแนวนอนตรงกลาง */
-      align-items: center;       /* จัดแนวตั้งตรงกลาง */
-      min-height: 100vh;         /* เต็มหน้าจอ */
-    }
-    form {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      width: 350px;
-    }
-    h2 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    label {
-      font-weight: bold;
-    }
-    input, textarea, select, button {
-      width: 100%;
-      padding: 8px;
-      margin: 5px 0 15px 0;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-    button {
-      background: #007bff;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #0056b3;
-    }
+    body{background:#f8f9fa}
+    .container{display:flex;justify-content:center;align-items:center;min-height:70vh}
+    form{background:#fff;padding:20px;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,.08);width:360px}
+    h2{text-align:center;margin-bottom:16px}
+    label{font-weight:700}
+    input,textarea,select,button{width:100%;padding:8px;margin:6px 0 14px;border:1px solid #ccc;border-radius:6px}
+    button{background:#007bff;color:#fff;border:0;cursor:pointer}
+    button[disabled]{opacity:.6;cursor:not-allowed}
+    .status{margin-top:8px;font-size:.95rem}
+    .status.ok{color:#2e7d32}.status.err{color:#c62828}
+    .hp{position:absolute;left:-9999px;opacity:0;height:0;width:0;overflow:hidden}
   </style>
 </head>
 <body>
+  <header>
+    <div class="logo-container">
+      <img src="logo.jpg" alt="โลโก้ร้าน" class="logo">
+      <h1>ร้านรองเท้ามือสอง</h1>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html">หน้าแรก</a></li>
+        <li><a href="product.html">สินค้า</a></li>
+        <li><a href="about.html">เกี่ยวกับเรา</a></li>
+        
+      </ul>
+    </nav>
+  </header>
+
   <div class="container">
-    <form id="orderForm" onsubmit="sendEmail(event)">
+    <form id="orderForm">
       <h2>ฟอร์มสั่งซื้อสินค้า</h2>
+      <input type="text" name="company" class="hp" tabindex="-1" autocomplete="off"/>
 
-      <label>ชื่อ:</label>
-      <input type="text" name="name" required>
+      <label>ชื่อ</label>
+      <input type="text" name="name" required />
 
-      <label>เบอร์โทร:</label>
-      <input type="text" name="phone" required>
+      <label>เบอร์โทร</label>
+      <input type="tel" name="phone" required pattern="0[0-9\- ]{8,12}" placeholder="เช่น 08x-xxx-xxxx"/>
 
-      <label>ที่อยู่:</label>
+      <label>ที่อยู่</label>
       <textarea name="address" required></textarea>
 
-      <label>สินค้า:</label>
-      <select name="product">
-        <option value="Nike">Nike มือสอง</option>
-        <option value="Adidas">Adidas มือสอง</option>
+      <label>สินค้า</label>
+      <select name="product" id="productSelect">
+        <option value="Nike มือสอง">Nike มือสอง ขาวเหลือง (43/27.5cm)</option>
+        <option value="Adidas มือสอง">Nike มือสอง ขาวดำ (42/26.5cm)</option>
+        <option value="Nike มือสอง">Adidas มือสอง (38/23.5cm)</option>
+        <option value="ConverseOneStar มือสอง (43/28.5cm)">ConverseOneStar มือสอง (43/28.5cm)</option>
+        <option value="Nike มือสอง">VansSK8ขาวดำ มือสอง (42.5/27.5cm)</option>
+        <option value="Adidas มือสอง">VansSK8ขาวดำ มือสอง (41/26.5cm)</option>
       </select>
 
-      <label>จำนวน:</label>
-      <input type="number" name="quantity" value="1" required>
+      <label>จำนวน</label>
+      <input type="number" name="quantity" value="1" min="1" required />
 
-      <button type="submit">สั่งซื้อ</button>
+      <input type="hidden" name="page" id="pageField"/>
+      <input type="hidden" name="date" id="dateField"/>
+      <input type="hidden" name="order_id" id="orderIdField"/>
+
+      <button type="submit" id="submitBtn" class="btn">สั่งซื้อ</button>
+      <div class="status" id="status"></div>
     </form>
   </div>
 
-  <!-- EmailJS -->
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <script>
-    (function() {
-      emailjs.init("3WFPLVCZP_87CtJsE"); // Public Key
-    })();
+    (function(){ emailjs.init("3WFPLVCZP_87CtJsE"); })();
 
-    function sendEmail(event) {
-      event.preventDefault();
-      emailjs.sendForm("service_1bbgx1s", "template_3eflsqc", event.target)
-        .then(function() {
-          alert("ส่งคำสั่งซื้อเรียบร้อยแล้ว ✅");
-          document.getElementById("orderForm").reset();
-        }, function(error) {
-          alert("❌ เกิดข้อผิดพลาด: " + JSON.stringify(error));
+    // prefill ชื่อสินค้า
+    const q = new URLSearchParams(location.search);
+    const p = q.get('product');
+    if (p) document.getElementById('productSelect').value = p;
+
+    // hidden fields
+    document.getElementById('pageField').value = location.href;
+    document.getElementById('dateField').value = new Date().toLocaleString('th-TH');
+    document.getElementById('orderIdField').value = 'OD' + Math.random().toString(36).slice(2,8).toUpperCase();
+
+    const form = document.getElementById("orderForm");
+    const btn  = document.getElementById("submitBtn");
+    const box  = document.getElementById("status");
+
+    form.addEventListener("submit", function(e){
+      e.preventDefault();
+      if (form.company && form.company.value) return; // honeypot
+
+      btn.disabled = true; btn.textContent = "กำลังส่ง...";
+      box.className = "status"; box.textContent = "";
+
+      emailjs.sendForm("service_1bbgx1s", "template_3eflsqc", form)
+        .then(function(){
+          box.className = "status ok";
+          box.textContent = "ส่งคำสั่งซื้อเรียบร้อยแล้ว ✅ กรุณารอการติดต่อกลับ";
+          form.reset();
+        })
+        .catch(function(err){
+          box.className = "status err";
+          box.textContent = "เกิดข้อผิดพลาดในการส่ง ❌ " + (err && err.text ? err.text : "");
+        })
+        .finally(function(){
+          btn.disabled = false; btn.textContent = "สั่งซื้อ";
         });
-    }
+    });
   </script>
 </body>
 </html>
-
-
-
+<footer>
+    <p>หมายเหตุ: สินค้าจัดเก็บปลายทาง หากสินค้ามีปัญหาทางร้านจะติดต่อกลับไปยังเบอร์ปลายทางขอลูกค้า </p>
+  </footer>
+</body>
+</html>
