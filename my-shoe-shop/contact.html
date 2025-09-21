@@ -1,64 +1,120 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>สั่งซื้อสินค้า - ร้านรองเท้ามือสอง</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <header><h1>สั่งซื้อสินค้า</h1></header>
-  <nav>
-    <a href="index.html">หน้าแรก</a>
-    <a href="products.html">สินค้า</a>
-    <a href="about.html">เกี่ยวกับเรา</a>
-    <a href="contact.html">สั่งซื้อรองเท้า</a>
-  </nav>
-  <!DOCTYPE html>
 <html lang="th">
 <head>
   <meta charset="UTF-8">
-  <title>สั่งซื้อรองเท้า</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>สั่งซื้อสินค้า | T‑Shop</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body{background:#f8f9fa}
+    .container{display:flex;justify-content:center;align-items:center;min-height:70vh}
+    form{background:#fff;padding:20px;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,.08);width:360px}
+    h2{text-align:center;margin-bottom:16px}
+    label{font-weight:700}
+    input,textarea,select,button{width:100%;padding:8px;margin:6px 0 14px;border:1px solid #ccc;border-radius:6px}
+    button{background:#007bff;color:#fff;border:0;cursor:pointer}
+    button[disabled]{opacity:.6;cursor:not-allowed}
+    .status{margin-top:8px;font-size:.95rem}
+    .status.ok{color:#2e7d32}.status.err{color:#c62828}
+    .hp{position:absolute;left:-9999px;opacity:0;height:0;width:0;overflow:hidden}
+  </style>
 </head>
 <body>
-  <h2>ฟอร์มสั่งซื้อรองเท้า</h2>
-  <form method="POST" action="send_order.php">
-    <label>ชื่อ-นามสกุล:</label><br>
-    <input type="text" name="name" required><br><br>
+  <header>
+    <div class="logo-container">
+      <img src="logo.jpg" alt="โลโก้ร้าน" class="logo">
+      <h1>ร้านรองเท้ามือสอง</h1>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html">หน้าแรก</a></li>
+        <li><a href="product.html">สินค้า</a></li>
+        <li><a href="about.html">เกี่ยวกับเรา</a></li>
+        
+      </ul>
+    </nav>
+  </header>
 
-    <label>เบอร์โทร / ช่องทางติดต่อ:</label><br>
-    <input type="text" name="phone" required><br><br>
+  <div class="container">
+    <form id="orderForm">
+      <h2>ฟอร์มสั่งซื้อสินค้า</h2>
+      <input type="text" name="company" class="hp" tabindex="-1" autocomplete="off"/>
 
-    <label>ที่อยู่จัดส่ง:</label><br>
-    <textarea name="address" required></textarea><br><br>
+      <label>ชื่อ</label>
+      <input type="text" name="name" required />
 
-    <label>เลือกรองเท้า:</label><br>
-    <select name="product" required>
-      <option value="Nike หมด">Nike หมด</option>
-      <option value="Adidas หมด">Adidas หมด</option>
-    </select><br><br>
+      <label>เบอร์โทร</label>
+      <input type="tel" name="phone" required pattern="0[0-9\- ]{8,12}" placeholder="เช่น 08x-xxx-xxxx"/>
 
-    <label>จำนวน:</label><br>
-    <input type="number" name="quantity" value="1" min="1" required><br><br>
+      <label>ที่อยู่</label>
+      <textarea name="address" required></textarea>
 
-    <button type="submit">สั่งซื้อตอนนี้</button>
-  </form>
-<script>
-  // ฟังก์ชันอ่านค่า URL parameter
-  function getQueryParam(param) {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get(param);
-  }
+      <label>สินค้า</label>
+      <select name="product" id="productSelect">
+        <option value="Nike มือสอง">Nike มือสอง ขาวเหลือง (43/27.5cm)</option>
+        <option value="Adidas มือสอง">Nike มือสอง ขาวดำ (42/26.5cm)</option>
+        <option value="Nike มือสอง">Adidas มือสอง (38/23.5cm)</option>
+        <option value="ConverseOneStar มือสอง (43/28.5cm)">ConverseOneStar มือสอง (43/28.5cm)</option>
+        <option value="Nike มือสอง">VansSK8ขาวดำ มือสอง (42.5/27.5cm)</option>
+        <option value="Adidas มือสอง">VansSK8ขาวดำ มือสอง (41/26.5cm)</option>
+      </select>
 
-  // ตรวจสอบสถานะจาก URL
-  window.onload = function() {
-    const status = getQueryParam('status');
-    if (status === 'success') {
-      alert("✅ ส่งคำสั่งซื้อสำเร็จแล้ว ขอบคุณที่สั่งซื้อครับ!");
-    } else if (status === 'error') {
-      alert("❌ เกิดข้อผิดพลาดในการส่งคำสั่งซื้อ กรุณาลองใหม่อีกครั้ง");
-    }
-  };
-</script>
+      <label>จำนวน</label>
+      <input type="number" name="quantity" value="1" min="1" required />
+
+      <input type="hidden" name="page" id="pageField"/>
+      <input type="hidden" name="date" id="dateField"/>
+      <input type="hidden" name="order_id" id="orderIdField"/>
+
+      <button type="submit" id="submitBtn" class="btn">สั่งซื้อ</button>
+      <div class="status" id="status"></div>
+    </form>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script>
+    (function(){ emailjs.init("3WFPLVCZP_87CtJsE"); })();
+
+    // prefill ชื่อสินค้า
+    const q = new URLSearchParams(location.search);
+    const p = q.get('product');
+    if (p) document.getElementById('productSelect').value = p;
+
+    // hidden fields
+    document.getElementById('pageField').value = location.href;
+    document.getElementById('dateField').value = new Date().toLocaleString('th-TH');
+    document.getElementById('orderIdField').value = 'OD' + Math.random().toString(36).slice(2,8).toUpperCase();
+
+    const form = document.getElementById("orderForm");
+    const btn  = document.getElementById("submitBtn");
+    const box  = document.getElementById("status");
+
+    form.addEventListener("submit", function(e){
+      e.preventDefault();
+      if (form.company && form.company.value) return; // honeypot
+
+      btn.disabled = true; btn.textContent = "กำลังส่ง...";
+      box.className = "status"; box.textContent = "";
+
+      emailjs.sendForm("service_1bbgx1s", "template_3eflsqc", form)
+        .then(function(){
+          box.className = "status ok";
+          box.textContent = "ส่งคำสั่งซื้อเรียบร้อยแล้ว ✅ กรุณารอการติดต่อกลับ";
+          form.reset();
+        })
+        .catch(function(err){
+          box.className = "status err";
+          box.textContent = "เกิดข้อผิดพลาดในการส่ง ❌ " + (err && err.text ? err.text : "");
+        })
+        .finally(function(){
+          btn.disabled = false; btn.textContent = "สั่งซื้อ";
+        });
+    });
+  </script>
 </body>
 </html>
-
+<footer>
+    <p>หมายเหตุ: สินค้าจัดเก็บปลายทาง หากสินค้ามีปัญหาทางร้านจะติดต่อกลับไปยังเบอร์ปลายทางขอลูกค้า </p>
+  </footer>
+</body>
+</html>

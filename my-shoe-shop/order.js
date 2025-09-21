@@ -1,3 +1,4 @@
+
 document.getElementById("orderForm").addEventListener("submit", function(e) {
   e.preventDefault();
   const form = e.target;
@@ -12,7 +13,7 @@ document.getElementById("orderForm").addEventListener("submit", function(e) {
   .then(data => {
     messageBox.style.display = "block";
     messageBox.className = "message success";
-    messageBox.textContent = "✅ ส่งคำสั่งซื้อสำเร็จแล้ว ขอบคุณที่สั่งซื้อครับ!";
+    messageBox.textContent = "✅ ส่งคำสั่งซื้อสำเร็จแล้ว ขอบคุณที่สั่งซื้อครับ! หมายเหตุ: สินค้าจัดเก็บปลายทาง หากสินค้ามีปัญหาทางร้านจะติดต่อกลับไปยังเบอร์ปลายทางขอลูกค้า";
     form.reset();
   })
   .catch(err => {

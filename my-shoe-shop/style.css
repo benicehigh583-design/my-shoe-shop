@@ -1,62 +1,129 @@
-body {
-  font-family: sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #f7f7f7;
-}
+/* รีเซ็ต */
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Prompt', system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
 
-header {
-  background-color: #2c3e50;
-  color: white;
-  padding: 20px;
-  text-align: center;
+:root {
+  --bg: #f5f6fa;
+  --primary: #007bff;
+  --primary-dark: #0056b3;
+  --ink: #2c3e50;
 }
-
-nav {
-  background-color: #34495e;
-  padding: 10px;
-  text-align: center;
-}
-
-nav a {
-  color: white;
-  margin: 0 15px;
-  text-decoration: none;
-}
-
-main {
-  padding: 30px;
-  text-align: center;
-}
-
-.product-list {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  flex-wrap: wrap;
-  margin-top: 20px;
+/* === ปรับ layout ของสินค้าให้สมส่วน === */
+.products-container {
+  max-width: 1100px;
+  margin: 16px auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 22px;
+  padding: 0 16px;
 }
 
 .product-card {
-  background-color: white;
-  border: 1px solid #ccc;
-  padding: 15px;
-  width: 200px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  padding: 14px;
+  transition: transform 0.25s, box-shadow 0.25s;
 }
 
-.product-card img {
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* กล่องสำหรับรูปสินค้า */
+.product-card .thumb {
   width: 100%;
+  aspect-ratio: 16 / 9;   /* กำหนดสัดส่วน เช่น 16:9 */
+  overflow: hidden;
+  border-radius: 10px;
+  background: #f0f0f0;
 }
 
-button {
-  background-color: #2980b9;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  cursor: pointer;
+.product-card .thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* ครอบรูปให้เต็มกรอบ ไม่บิด */
+  display: block;
 }
 
-button:hover {
-  background-color: #1c5980;
+.product-card h3 {
+  margin: 10px 0 4px;
+  font-size: 18px;
+  font-weight: 800;
+  color: #2c3e50;
+  text-align: center;
 }
+
+.product-card p {
+  color: #555;
+  font-size: 15px;
+  text-align: center;
+}
+
+.product-card .btn {
+  display: inline-block;
+  margin-top: 10px;
+}
+
+/* ส่วนหัว */
+header {
+  background: url('banner2.png') no-repeat center center; 
+  background-size: cover;   /* ขยายให้เต็มกรอบ */
+  height: 150px;            /* ปรับความสูงของ header */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 200px;
+  color: #fff;              /* ตัวอักษรสีขาว */
+}
+
+.logo-container { display: flex; align-items: center; justify-content: center; gap: 12px; }
+.logo { height: 56px; width:56px; object-fit: cover; border-radius: 50%; }
+nav ul { list-style: none; display: flex; justify-content: center; gap: 18px; margin-top: 8px; flex-wrap: wrap; }
+nav a { color: #fff; text-decoration: none; font-weight: 700; }
+nav a:hover { color: #f39c12; }
+
+/* โครงหน้า */
+main { padding: 0 0 28px 0; background: var(--bg); min-height: calc(100vh - 180px); }
+.container-narrow { max-width: 1100px; margin: 0 auto; padding: 28px 16px; }
+
+/* ส่วนท้าย */
+footer { background: var(--ink); color: #fff; text-align: center; padding: 18px; }
+
+/* -------- HERO -------- */
+.hero { position: relative; height: 58vh; min-height: 380px; overflow: hidden; background:#000; }
+.hero-track { display:flex; width:300%; height:100%; transition:transform .6s ease; }
+.hero-slide { flex:0 0 100%; background-size:contain; background-position:center; position:relative; }
+.hero-slide::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,rgba(0,0,0,.35),rgba(0,0,0,.45)); }
+.hero-content { position:absolute; inset:0; display:flex; flex-direction:column; justify-content:center; padding:0 8vw; color:#fff; z-index:1; gap:8px; }
+.hero h2 { font-size: clamp(24px,4vw,44px); font-weight:800; }
+.hero p { font-size: clamp(14px,2vw,18px); opacity:.95; }
+.btn { display:inline-block; background:var(--primary); color:#fff; padding:10px 18px; border-radius:8px; text-decoration:none; font-weight:700; }
+.btn:hover { background:var(--primary-dark); }
+.btn-light{ background:#fff; color:var(--ink); }
+.btn-light:hover{ background:#f2f2f2; }
+
+.hero-nav{ position:absolute; top:50%; transform:translateY(-50%); width:42px; height:42px;
+  border:none; border-radius:50%; background:rgba(255,255,255,.85); cursor:pointer; z-index:2; font-size:22px;}
+.hero-nav.prev{ left:14px } .hero-nav.next{ right:14px }
+.hero-dots{ position:absolute; left:50%; transform:translateX(-50%); bottom:14px; display:flex; gap:8px; z-index:2; }
+.dot{ width:10px; height:10px; border-radius:50%; border:0; background:#ffffff80; }
+.dot.active{ background:#fff; }
+
+/* -------- CATEGORY SHORTCUTS -------- */
+.cats{ display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:18px; margin:24px auto; }
+.cat{ background:#fff; border-radius:16px; box-shadow:0 6px 16px rgba(0,0,0,.08); text-align:center; padding:14px; text-decoration:none; color:var(--ink); transition:transform .2s, box-shadow .2s; }
+.cat:hover{ transform:translateY(-4px); box-shadow:0 10px 22px rgba(0,0,0,.12); }
+.cat img{ width:64px; height:64px; object-fit:contain; border-radius:50%; margin-bottom:8px; }
+
+/* -------- PROMO -------- */
+.promo{ background:#fff; border-radius:12px; padding:12px 16px; text-align:center; box-shadow:0 6px 16px rgba(0,0,0,.06); font-weight:700; max-width:1100px; margin:0 auto; }
+
+/* -------- PRODUCT GRID -------- */
+.products-container{ max-width:1100px; margin:16px auto; display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:22px; padding:0 16px; }
+.product-card{ background:#fff; border-radius:14px; box-shadow:0 6px 18px rgba(0,0,0,.08); padding:14px; transition:transform .25s, box-shadow .25s; }
+.product-card:hover{ transform:translateY(-4px); box-shadow:0 10px 24px rgba(0,0,0,.12); }
+.product-card img{ width:100%; height:180px; object-fit:cover; border-radius:10px; }
+.product-card h3{ margin:10px 0 4px; font-size:18px; font-weight:800; color:var(--ink); text-align:center; }
+.product-card p{ color:#555; font-size:15px; text-align:center; }
+.product-card .btn{ display:inline-block; margin-top:10px; }

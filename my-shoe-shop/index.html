@@ -1,25 +1,111 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="th">
 <head>
-  <meta charset="UTF-8">
-  <title>ร้านรองเท้ามือสอง</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ร้านรองเท้ามือสอง | T‑Shop</title>
+  <meta name="description" content="รองเท้ามือสองคัดเกรด Nike / Adidas ราคาประหยัด ส่งไว ติดต่อสะดวก">
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-  <header><h1>ร้านรองเท้ามือสอง</h1></header>
-  <nav>
-    <a href="index.html">หน้าแรก</a>
-    <a href="products.html">สินค้า</a>
-    <a href="about.html">เกี่ยวกับเรา</a>
-    <a href="contact.html">Order</a>
-  </nav>
+  <!-- ส่วนหัว -->
+  <header>
+    <div class="logo-container">
+      <img src="logo.jpg" alt="โลโก้ร้าน" class="logo"/>
+      <h1>ร้านรองเท้ามือสอง</h1>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html">หน้าแรก</a></li>
+        <li><a href="product.html">สินค้า</a></li>
+        <li><a href="about.html">เกี่ยวกับเรา</a></li>
+        
+      </ul>
+    </nav>
+  </header>
+
   <main>
-    <h2>ยินดีต้อนรับ</h2>
-    <p>ร้านเราขายรองเท้ามือสองคุณภาพดี ราคาประหยัด</p>
+    <!-- HERO SLIDER -->
+    <section class="hero">
+      <div class="hero-track">
+        <div class="hero-slide" style="background-image:url('e3.png')">
+          <div class="hero-content">
+            <h2>รองเท้ามือสองคัดเกรด</h2>
+            <p>สะอาด ตรวจสภาพ พร้อมใส่ ราคาดีสุด</p>
+            <a href="product.html" class="btn btn-light">ช็อปเลย</a>
+          </div>
+        </div>
+        <div class="hero-slide" style="background-image:url('e3.png')">
+          <div class="hero-content">
+            <h2>Adidas / Nike ไซซ์ครบ</h2>
+            <p>ของจริงทุกคู่ มีรูปหลายมุม</p>
+            <a href="product.html" class="btn btn-light">ดูสินค้าทั้งหมด</a>
+          </div>
+        </div>
+        <div class="hero-slide" style="background-image:url('e3.png')">
+          <div class="hero-content">
+            <h2>T‑Shop Second‑hand</h2>
+            <p>ส่งไว ติดต่อสะดวก ผ่านแบบฟอร์ม</p>
+            <a href="contact.html" class="btn btn-light">สั่งซื้อ/สอบถาม</a>
+          </div>
+        </div>
+      </div>
+      <button class="hero-nav prev" aria-label="ก่อนหน้า">‹</button>
+      <button class="hero-nav next" aria-label="ถัดไป">›</button>
+      <div class="hero-dots"></div>
+    </section>
+
+    <!-- CATEGORY SHORTCUTS -->
+    <section class="cats container-narrow">
+      <a class="cat" href="product.html#nike">
+        <img src="Nike-Logo.png" alt="Nike"><span>Nike</span>
+      </a>
+      <a class="cat" href="product.html#adidas">
+        <img src="Adidas_Logo.png" alt="Adidas"><span>Adidas</span>
+      </a>
+      <a class="cat" href="product.html#under1k">
+        <img src="logo.jpg" alt="Under 1k"><span>ต่ำกว่า 1,000฿</span>
+      </a>
+      <a class="cat" href="contact.html">
+        <img src="logo.jpg" alt="Deals"><span>ดีลวันนี้</span>
+      </a>
+    </section>
+
+    <!-- PROMO BAR -->
+    <section class="promo container-narrow">
+      🎁 โปรวันนี้: ลดเพิ่ม 50฿ เมื่อสั่ง 2 คู่ขึ้นไป | ส่ง J&T/ไปรษณีย์
+    </section>
   </main>
+
+  <footer>
+    <p>© 2025 ร้านรองเท้ามือสอง</p>
+  </footer>
+
+  <script>
+    // slider minimal
+    const track = document.querySelector('.hero-track');
+    const slides = [...document.querySelectorAll('.hero-slide')];
+    const dotsBox = document.querySelector('.hero-dots');
+    let i = 0, timer;
+
+    slides.forEach((_, idx) => {
+      const b = document.createElement('button');
+      b.className = 'dot' + (idx===0?' active':'');
+      b.onclick = ()=>go(idx);
+      dotsBox.appendChild(b);
+    });
+
+    function go(n){
+      i = (n+slides.length)%slides.length;
+      track.style.transform = `translateX(-${i*100}%)`;
+      document.querySelectorAll('.dot').forEach((d,k)=>d.classList.toggle('active',k===i));
+      reset();
+    }
+    function next(){ go(i+1); }
+    function reset(){ clearInterval(timer); timer = setInterval(next, 4000); }
+    document.querySelector('.hero-nav.next').onclick = next;
+    document.querySelector('.hero-nav.prev').onclick = ()=>go(i-1);
+    reset();
+  </script>
 </body>
 </html>
-
-
-
